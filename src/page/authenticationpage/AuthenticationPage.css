@@ -9,7 +9,7 @@
   justify-content: center; /* Center content vertically */
   margin-top: 0; /* Remove top margin to make the image cover the entire viewport */
   height: 100vh; /* Set the height to 100% of the viewport height */
-  background-image: url('C:/Users/ADMIN/Documents/FE1/public/nen (2).jpg');
+  background-image: url('/nen (2).jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -126,4 +126,14 @@
   p{
     color :black;
   }
-  
+  .confirm-password-toggle-button {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: black;
+  }

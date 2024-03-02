@@ -58,11 +58,11 @@ const LogInPage = () => {
                 const response = await api.post(url, data);
                 var user = response.data;
                 setAuth({ user, authen });
-                if (user.roleId === '2') {
+                if (user.roleId === '1') {
                     console.log('ys');
                     navigate('/home');
                 }
-                if (user.roleId === '1') {
+                if (user.roleId === '2') {
                     navigate('/admin-page');
                 } if (user.roleId === '4')
                     navigate('/manager-page');

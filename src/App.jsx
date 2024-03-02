@@ -44,10 +44,11 @@ import BlogForm from "./page/rolepage/staffpage/CreateBlog";
 import ConfirmPage from "./page/ConfirmPage";
 import WaitingOrderPage from "./page/WaitingOrderPage";
 import Page from "./page/Page";
-import Na from "./page/Napage";
+import Napage from "./page/Napage";
 import Cpage from "./page/Cpage";
 import Editpage from "./page/Editpage";
 import PaymentPage from "./page/PaymentPage";
+import Detailpage from "./page/Detailpage";
 
 import React, { useState } from 'react';
 
@@ -101,7 +102,7 @@ const App = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/products/cages" element={<CagePage />} />
         <Route path="/products/food" element={<FoodPage />} />
-        <Route path="/na" element={<Na />} />
+       
         
         
         
@@ -121,7 +122,7 @@ const App = () => {
         <Route path="/custom-products-end" element={<TotalPage />} />
         <Route path="/order-confirm" element={<ConfirmPage />} />
         <Route path="/order-waiting" element={<WaitingOrderPage />} />
-        <Route path="/page-m" element={<Cpage />} />
+      
        
       
         
@@ -133,7 +134,7 @@ const App = () => {
       </Route>
 
       {/* user routes */}
-      <Route element={<RequireAuth allowedRoles={["2"]} />}>
+      <Route element={<RequireAuth allowedRoles={["1"]} />}>
         <Route element={<Layout />}>
         <Route path="/home" element={<HomePage />} />
           <Route path="/products/cages" element={<CagePage />} />
@@ -148,6 +149,8 @@ const App = () => {
           <Route path="/about-us" element={<AboutPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/save" element={<SavePage savedProducts={savedProducts} />} />
+          <Route path="/page-m" element={<Cpage />} />
+          <Route path="/na" element={<Napage />} />
         </Route>
       </Route>
 
@@ -157,15 +160,16 @@ const App = () => {
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/update-info" element={<UpdateInformationPage />} />
       <Route path="/page-c" element={<Page />} />
-      <Route path="/page-n" element={<Na />} />
+      
       <Route path="/edit" element={<Editpage />} />
       <Route path="/pay" element={<PaymentPage />} />
+      <Route path="/detail/:artworkId" element={<Detailpage />} />
 
       
       
 
       {/* admin routes */}
-      <Route element={<RequireAuth allowedRoles={["1"]} />}>
+      <Route element={<RequireAuth allowedRoles={["2"]} />}>
         <Route path="/admin-page" element={<AdminPage />} />
         <Route element={<RoleLayout />}>
           <Route path="/manage-account" element={<ManageAccount />} />

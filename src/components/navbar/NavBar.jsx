@@ -66,7 +66,7 @@ const NavBar = () => {
     <nav>
       <div className="icons">
         <Link to="/home">
-          <img src="https://tse1.mm.bing.net/th?id=OIP.RD4Ofna7_k2J6uwAnp-sIAAAAA&pid=Api&P=0&h=180" alt="Logo" />
+          <img src="\nenart.jpg" alt="Logo" />
         </Link>
         <div className="search-container">
           <img src="https://www.thinkafrica.fi/wp-content/uploads/2019/04/search-icon.png" alt="Search" />

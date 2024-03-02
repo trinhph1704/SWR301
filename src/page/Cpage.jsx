@@ -1,5 +1,7 @@
 // MyCollection.js
 import React from 'react';
+import Na from "./Napage";
+
 
 
 const Cpage = () => {
@@ -16,7 +18,7 @@ const Cpage = () => {
     
     <div>
         
-        
+        <Na className="Navuser" />
       <h2>My Collection</h2>
       <ul>
         {savedPaintings.map((painting) => (
