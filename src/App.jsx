@@ -44,6 +44,7 @@ import BlogForm from "./page/rolepage/staffpage/CreateBlog";
 import ConfirmPage from "./page/ConfirmPage";
 import WaitingOrderPage from "./page/WaitingOrderPage";
 import Page from "./page/Page";
+import Premium from "./page/Premium";
 import Na from "./page/Napage";
 import Cpage from "./page/Cpage";
 import Editpage from "./page/Editpage";
@@ -157,6 +158,7 @@ const App = () => {
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/update-info" element={<UpdateInformationPage />} />
       <Route path="/page-c" element={<Page />} />
+      <Route path="/pre" element={<Premium />} />
       <Route path="/page-n" element={<Na />} />
       <Route path="/edit" element={<Editpage />} />
       <Route path="/pay" element={<PaymentPage />} />
