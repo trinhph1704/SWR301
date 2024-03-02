@@ -1,8 +1,14 @@
 import { Navigate, Routes, Route } from "react-router-dom";
+import Header from "./page/rolepage/moderatorPage/components/Header";
+import { Outlet } from "react-router-dom";
+import Body from "./page/rolepage/moderatorPage/components/Body";
+import ProductPageDetail from "./page/rolepage/moderatorPage/components/ProductPageDetail";
+import Report from "./page/rolepage/moderatorPage/components/Report";
 import RequireAuth from "./components/ReqAuth/RequireAuth";
 import Layout from "./components/layout/Layout";
 import Layoutguest from "./components/layout/Layoutguest";
 import HomePage from "./page/HomePage";
+import Order from "./page/Order";
 import CagePage from "./page/productpage/CagePage";
 import FoodPage from "./page/productpage/FoodPage";
 import AccessoriesToysPage from "./page/productpage/AccessoriesToysPage";
@@ -93,12 +99,20 @@ const App = () => {
    
   ]);
   return (
+    
+    // <div className="container">
+    //   <Header />
+    //   {/* <ProductPage/> */}
+    //   <Outlet/>
+    // </div>
+    
 
     <Routes>
       {/* public routes */}
      
      <Route element={<Layoutguest />}> 
         <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/order" element={<Order />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/products/cages" element={<CagePage />} />
         <Route path="/products/food" element={<FoodPage />} />
@@ -151,6 +165,11 @@ const App = () => {
           <Route path="/save" element={<SavePage savedProducts={savedProducts} />} />
           <Route path="/page-m" element={<Cpage />} />
           <Route path="/na" element={<Napage />} />
+          {/* <Route path="/content" element={<Body />}/>
+        
+        <Route path="/report" element={<Report />}/>
+        <Route path="/productPageDetail/:productId" element={<ProductPageDetail />} /> */}
+
         </Route>
       </Route>
 
@@ -204,6 +223,13 @@ const App = () => {
           <Route path="/announce-order" element={<AnnounceOrderPage />} />
         </Route>
       </Route>
+      {/* moderator routes */}
+      <Route path="/content" element={<Body />}/>
+        
+        <Route path="/report" element={<Report />}/>
+        <Route path="/productPageDetail/:productId" element={<ProductPageDetail />} />
+      
+
       <Route element={<Layoutguest />}> </Route>
       <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<HomePage />} />

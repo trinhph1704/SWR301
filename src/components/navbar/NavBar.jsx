@@ -86,7 +86,7 @@ const NavBar = () => {
         {auth.user ? (
           <div className="sub-nav" style={{ display: showSubNav ? 'block' : 'none' }}>
             <ul>
-              <li><NavLink to="/my-collection">My Collection</NavLink></li>
+              <li><NavLink to="/page-m">My Collection</NavLink></li>
               <li><NavLink to="/save">Save</NavLink></li>
               <li><NavLink to="/edit">Edit</NavLink></li>
               <li>
