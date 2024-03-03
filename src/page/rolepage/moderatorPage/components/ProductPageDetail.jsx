@@ -19,6 +19,8 @@ export default function ProductPage (){
   const [notification, setNotification] = useState('');
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
   const navigate = useNavigate();
+  const [showRejectReason, setShowRejectReason] = useState(false);
+  const [showButtons, setShowButtons] = useState(true);
   // const history = useHistory();
 
   useEffect(() => {
@@ -90,18 +92,18 @@ export default function ProductPage (){
      
           <img src={product.imageUrl} alt="Product" />        
         <div className="info-container">
-        <div className='Box-notification'>
+        {/* <div className='Box-notification'>
         <div className="notification-icon" >
         <AiFillBell onClick={toggleNotification}/>
         </div>
         {!isNotificationVisible && (
         <div className="notification-popup">
-          {/* Nội dung thông báo */}
+          Nội dung thông báo
           <p>{notification}</p>
           
         </div>
       )}
-        </div>
+        </div> */}
         {/* <button class="back-button"></button> */}
           <div className="details">
             <div className="author">{product.description}</div>
@@ -111,14 +113,27 @@ export default function ProductPage (){
             </div>
           </div>
           <div className="actions">
+          {showRejectReason && (
+            <div className='showReason'>
             <textarea placeholder="Lý do " className="reject-reason"
             value={rejectReason}
             onChange={(e) => setRejectReason(e.target.value)}
-            ></textarea>
-            
-            <button onClick={handleUnApprove}className="reject-button">UNAPPROVE</button>
+            >
+            </textarea>
+            <button onClick={() =>{ setShowRejectReason(false);
+            setShowButtons(true); } } className="Back-to-approve">BACK</button>
+            <button onClick={handleUnApprove}className="show-reject-button">CONFIRM</button> 
+            </div>
+            )}
+            {showButtons && ( 
+              <div className='actions'>
+            <button onClick={() =>{ setShowRejectReason(true);
+            setShowButtons(false); }               
+            }className="reject-button">UNAPPROVE</button>
             <div className="posting-time">Thời gian đăng: {product.time}</div>
             <button onClick={handleApprove}className="approve-button">APPROVE</button>
+            </div>
+            )}
           </div>
         </div>
       </div>
