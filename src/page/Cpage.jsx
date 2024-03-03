@@ -45,6 +45,9 @@ export default function Cpage() {
     
     <div >
        <Na className="Navuser" /> 
+       <div className="upload-button-container">
+  <button className="upload-image">Upload image</button>
+</div>
        <div className='my-collection'>
       {artworkList.map((artwork) => (
         <div key={artwork.$id} className="image-collection">
