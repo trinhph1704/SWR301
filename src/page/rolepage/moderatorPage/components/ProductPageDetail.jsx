@@ -6,6 +6,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { AiFillBell } from "react-icons/ai";
 import api from '../../../../components/utils/requestAPI';
+import LayoutMorder from "../../../../components/layout/LayoutMorder";
 
 
 // eslint-disable-next-line no-unused-vars, react/prop-types
@@ -47,7 +48,7 @@ export default function ProductPage (){
 
   const handleApprove = async () => {
     try {
-      const url = `/api/Artwork/update-artwork-proccessing?artworkId=${productId}`;
+      const url = `https://localhost:7227/api/Artwork/update-artwork-proccessing?artworkId=${productId}`;
       const data = {
           reason: rejectReason        
       };
@@ -62,7 +63,7 @@ export default function ProductPage (){
   };
   const handleUnApprove = async () => {
     try {
-      const url = `/api/Artwork/delete-artwork?id=${productId}`;
+      const url = `https://localhost:7227/api/Artwork/delete-artwork?id=${productId}`;
       const data = {
           reason: rejectReason        
       };
@@ -83,7 +84,8 @@ export default function ProductPage (){
     setIsNotificationVisible(!isNotificationVisible);
   };
   return ( 
-    <div className="product-page">
+    <LayoutMorder>
+    <div className="productdetail-page">
       <div className="body1">
      
           <img src={product.imageUrl} alt="Product" />        
@@ -121,6 +123,7 @@ export default function ProductPage (){
         </div>
       </div>
       </div>
+      </LayoutMorder>
   );
 }
 
