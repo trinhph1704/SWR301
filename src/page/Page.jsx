@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from "react";
-import "./Page.css";
-import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
 import api from "../components/utils/requestAPI";
-import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import "./Page.css";
 
 const Page = () => {
   const { auth } = useAuth();
-  const [genreList, setGenreList] = useState(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [genreID, setGenreID] = useState("");
+  const [imageUrl, setImageUrl] = useState(""); // Sử dụng để lưu đường dẫn đến hình ảnh dưới dạng base64
+  const [reason, setReason] = useState("");
+  const [genreList, setGenreList] = useState([]);
 
   useEffect(() => {
+    // Fetch genre list
     const fetchGenres = async () => {
-      const url = "https://localhost:7227/api/Genre/get-all";
       try {
-        const response = await api.get(url);
-        console.log(response.data);
-        const extractedGenres = response.data.$values || []; // Kiểm tra nếu không có dữ liệu, gán một mảng rỗng
-        setGenreList(extractedGenres);
+        const response = await api.get("https://localhost:7227/api/Genre/get-all");
+        const data = response.data.$values;
+        setGenreList(data);
       } catch (error) {
         console.error('Error fetching genre data:', error);
       }
@@ -25,21 +28,128 @@ const Page = () => {
     fetchGenres();
   }, []);
 
-  if (!genreList || !Array.isArray(genreList)) {
-    return <div>Loading...</div>;
-  }
+  const handleImageChange = (event) => {
+    const file = event.target.files[0]; // Lấy file từ sự kiện onChange
+
+    // Tạo một đối tượng FileReader
+    const reader = new FileReader();
+
+    // Đọc file như một chuỗi dạng data URL
+    reader.readAsDataURL(file);
+
+    // Được gọi khi quá trình đọc file hoàn thành
+    reader.onload = () => {
+      const imageUrl = reader.result; // Nhận kết quả dạng base64
+      setImageUrl(imageUrl); // Cập nhật state imageUrl với đường dẫn mới
+    };
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const artworkData = {
+      title: title,
+      description: description,
+      price: price,
+      genreID: genreID,
+      imageUrl: imageUrl, // Sử dụng đường dẫn imageUrl để lưu hình ảnh dưới dạng base64
+      reason: reason
+    };
+
+    try {
+      const response = await api.post(
+        "https://localhost:7227/api/Artwork/create-new-artwork",
+        artworkData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`, // Use backticks here
+          },
+        }
+      );
+    
+      console.log("Artwork created successfully:", response.data);
+      // Handle success here, e.g., redirect user to another page
+    } catch (error) {
+      console.error("Error creating artwork:", error);
+      // Handle error here, e.g., show error message to the user
+    }
+  }  
 
   return (
-    <div className="genre-page">
-      <div className="genre-list">
-        {genreList.map((genre) => (
-          <div className="genre-item" key={genre.$id}>
-            <div className="genre-item-detail">
-              <h3 className="genre-name">{genre.name}</h3>
-            </div>
-          </div>
-        ))}
-      </div>
+    <div className="artwork-form">
+      <h1 className="form-title">Create Artwork</h1>
+      <form onSubmit={handleSubmit}>
+
+      <label className="form-label">
+          Genre:
+          <select
+            value={genreID}
+            onChange={(e) => setGenreID(e.target.value)}
+          >
+            <option value="">Select a genre</option>
+            {genreList.map(genre => (
+              <option key={genre.genreID} value={genre.genreID}>{genre.name}</option>
+            ))}
+          </select>
+        </label>
+
+        <label className="form-label">
+          Title:
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="form-input"
+          />
+        </label>
+
+        <label className="form-label">
+          Description:
+          <input
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="form-textarea"
+          />
+        </label>
+
+        <label className="form-label">
+          Price Paid:
+          <input
+            type="text"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="form-input"
+          />
+        </label>
+
+        <div className="image-upload">
+          <label className="form-label">
+            Upload Image:
+            <input
+              type="file"
+              onChange={(e) => setImageUrl(e.target.value)}
+              className="form-select"
+            />
+          </label>
+        </div>
+
+        {/* Hiển thị hình ảnh */}
+        {imageUrl && (
+          <img src={imageUrl} alt="Artwork" style={{ maxWidth: "100px", maxHeight: "100px" }} />
+        )}
+
+        <label className="form-label">
+          Reason:
+          <input
+            type="text"
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+          />
+        </label>
+
+        <button type="submit" className="submit-button">Add Artwork</button>
+      </form>
     </div>
   );
 };
