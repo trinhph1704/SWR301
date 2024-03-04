@@ -12,7 +12,7 @@ const LogInPage = () => {
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
-
+    const [loginError, setLoginError] = useState('');
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
@@ -34,6 +34,8 @@ const LogInPage = () => {
             setAuthen(response.data)
         } catch (error) {
             console.error(error);
+            setLoginError('Tên đăng nhập hoặc mật khẩu không chính xác'); 
+            window.alert('Tên đăng nhập hoặc mật khẩu không chính xác'); 
         }
     }
 
@@ -68,6 +70,7 @@ const LogInPage = () => {
                     navigate('/manager-page');
                 if (user.roleId === '3')
                     navigate('/staff-page')
+                    window.alert('Đăng nhập thành công');
             } catch (error) {
                 console.error(error);
             }

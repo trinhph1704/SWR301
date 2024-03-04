@@ -56,6 +56,7 @@ import Cpage from "./page/Cpage";
 import Editpage from "./page/Editpage";
 import PaymentPage from "./page/PaymentPage";
 import Detailpage from "./page/Detailpage";
+import Paymentblogpage from "./page/Paymentblogpage";
 
 import React, { useState } from 'react';
 
@@ -137,7 +138,7 @@ const App = () => {
         <Route path="/custom-products-end" element={<TotalPage />} />
         <Route path="/order-confirm" element={<ConfirmPage />} />
         <Route path="/order-waiting" element={<WaitingOrderPage />} />
-      
+        <Route path="/order-info" element={<Paymentblogpage />} />
        
       
         

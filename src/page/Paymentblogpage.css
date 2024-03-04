@@ -1,0 +1,43 @@
+.payment-blog-page {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* Đảm bảo các phần tử con co giãn để bằng chiều cao của container */
+    height: 50vh;
+}
+
+.product-info,
+.user-info {
+    border: 1px solid #ccc; /* Thêm viền 1px độ dày và màu xám nhạt */
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column; /* Hiển thị theo cột */
+    justify-content: center; /* Căn giữa các phần tử theo chiều dọc */
+    align-items: center; /* Căn giữa các phần tử theo chiều ngang */
+    padding: 20px;
+    margin: 10px;
+    flex: 1; /* Đảm bảo các khung có cùng chiều rộng */
+}
+
+.product-info {
+    max-width: 300px; /* Giới hạn chiều rộng của khung */
+}
+
+.user-info {
+    max-width: 300px; /* Giới hạn chiều rộng của khung */
+}
+
+.product-image {
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.info-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.info-item {
+    margin-bottom: 5px;
+}

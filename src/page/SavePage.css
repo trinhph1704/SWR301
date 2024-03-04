@@ -1,0 +1,62 @@
+.save-page {
+    padding: 20px;
+  }
+  
+  .product-item {
+    margin-top: 20vh;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .product-details {
+    padding: 10px;
+  }
+  
+  .product-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .product-author {
+    margin: 5px 0;
+  }
+  
+  .product-price {
+    margin: 5px 0;
+  }
+  
+  .unlove-button {
+    background-color: #ff7675;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .heart-icon {
+    
+    bottom: 20px;
+    right: 20px;
+    color: red;
+    cursor: pointer;
+    z-index: 1000; /* Đảm bảo nút trái tim hiển thị trên các phần tử khác */
+    margin-left: 30vh;
+  }
+  
