@@ -60,12 +60,11 @@ const Page = () => {
       const response = await api.post(
         "https://localhost:7227/api/Artwork/create-new-artwork",
         artworkData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`, // Use backticks here
-          },
-        }
+      {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      }
       );
     
       console.log("Artwork created successfully:", response.data);
@@ -77,7 +76,7 @@ const Page = () => {
   }  
 
   return (
-<div className="artwork-form">
+    <div className="artwork-form">
       <h1 className="form-title">Create Artwork</h1>
       <form onSubmit={handleSubmit}>
 
@@ -122,22 +121,54 @@ const Page = () => {
             className="form-input"
           />
         </label>
+        <div className="img-column-left">
+          <p>your artwork in upload Image</p>
+        
+        <img src="/public/i.png" alt="your artwork in upload Image" />
 
+        </div>
+        <div className="img-column-right">
+          <p>your artwork with your sign in Upload Image With Your Sign</p>
+        
+        <img src="/public/i_sign.png" alt="your artwork in upload Image" />
+
+        </div>
+        
         <div className="image-upload">
-          <label className="form-label">
-            Upload Image:
+        <label className="form-label">
+            Upload Image :
             <input
+              
               type="file"
-              onChange={(e) => setImageUrl(e.target.value)}
+              accept="image/*"
+              onChange={handleImageChange}
               className="form-select"
             />
           </label>
         </div>
 
+        
+
         {/* Hiển thị hình ảnh */}
         {imageUrl && (
           <img src={imageUrl} alt="Artwork" style={{ maxWidth: "100px", maxHeight: "100px" }} />
         )}
+        
+         <div className="image-upload">
+          <label className="form-label">
+            Upload Image With Your Sign:
+            <input
+              
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="form-select"
+            />
+          </label>
+        </div>
+        {imageUrl && (
+          <img src={imageUrl} alt="Artwork" style={{ maxWidth: "100px", maxHeight: "100px" }} />
+        )} 
 
         <label className="form-label">
           Reason:
