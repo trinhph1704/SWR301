@@ -1,6 +1,6 @@
 /* Page.css */
 
-.artwork-form {
+.add-artwork-form {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
@@ -16,11 +16,11 @@
   color: #333;
   font-size: 24px;
 }
-.form-column-left {
+.img-column-left {
   width: 500px;
   float: left;
 }
-.form-column-right {
+.img-column-right {
   width: 500px;
   float: right;
 }
@@ -36,7 +36,7 @@
 .form-input,
 .form-select,
 .form-textarea,
-.file-upload-input {
+.image-upload {
   width: 100%;
   padding: 10px;
 
@@ -55,8 +55,8 @@
 .form-select:valid,
 .form-textarea:focus,
 .form-textarea:valid,
-.file-upload-input:focus,
-.file-upload-input:valid {
+.image-upload:focus,
+.image-upload-input:valid {
   border-color: #000000; 
 }
 .form-label select {

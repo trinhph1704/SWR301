@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../components/utils/requestAPI";
 import useAuth from "../hooks/useAuth";
-import "./Page.css";
+import "./Page.css"
 
 const Page = () => {
   const { auth } = useAuth();
@@ -77,7 +77,7 @@ const Page = () => {
   }  
 
   return (
-    <div className="artwork-form">
+    <div className="add-artwork-form">
       <h1 className="form-title">Create Artwork</h1>
       <form onSubmit={handleSubmit}>
 
@@ -93,7 +93,7 @@ const Page = () => {
             ))}
           </select>
         </label>
-
+              <br />
         <label className="form-label">
           Title:
           <input
@@ -103,7 +103,7 @@ const Page = () => {
             className="form-input"
           />
         </label>
-
+              <br />
         <label className="form-label">
           Description:
           <input
@@ -112,7 +112,7 @@ const Page = () => {
             className="form-textarea"
           />
         </label>
-
+              <br />
         <label className="form-label">
           Price Paid:
           <input
@@ -122,23 +122,53 @@ const Page = () => {
             className="form-input"
           />
         </label>
+              <br />
+              <div>
+        <div className="img-column-left">
+          <p>your artwork in upload Image</p>
+        
+          <img src="/public/i.png" alt="your artwork in upload Image" />
 
+        </div>
+        <div className="img-column-right">
+          <p>your artwork with your sign in Upload Image With Your Sign</p>
+        
+        <img src="/public/i_sign.png" alt="your artwork in upload Image" />
+
+        </div>
+        </div>
+        <br />
         <div className="image-upload">
           <label className="form-label">
             Upload Image:
             <input
               type="file"
-              onChange={(e) => setImageUrl(e.target.value)}
+              accept="image/*"
+              onChange={handleImageChange}
               className="form-select"
             />
           </label>
         </div>
-
         {/* Hiển thị hình ảnh */}
         {imageUrl && (
           <img src={imageUrl} alt="Artwork" style={{ maxWidth: "100px", maxHeight: "100px" }} />
         )}
-
+        <br />
+        <div className="image-upload">
+          <label className="form-label">
+            Upload Image With Your Sign:
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="form-select"
+            />
+          </label>
+        </div>
+        {imageUrl && (
+          <img src={imageUrl} alt="Artwork" style={{ maxWidth: "100px", maxHeight: "100px" }} />
+        )}
+        <br />
         <label className="form-label">
           Reason:
           <input
@@ -147,7 +177,7 @@ const Page = () => {
             onChange={(e) => setReason(e.target.value)}
           />
         </label>
-
+          <br />
         <button type="submit" className="submit-button">Add Artwork</button>
       </form>
     </div>
