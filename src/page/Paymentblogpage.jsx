@@ -53,18 +53,27 @@ const Paymentblogpage = () => {
 
     return (
         <div className="payment-blog-page">
+             <h2 className="info-title">Thông tin sản phẩm</h2>
             <div className="product-info">
-                <img src={productInfo.imageUrl} alt="Sản phẩm" className="product-image" />
-                <h2 className="info-title">Thông tin sản phẩm</h2>
+           
+            <div className="product-info-image">  <img src={productInfo.imageUrl} alt="Sản phẩm" className="product-imagez" /> </div>
+              
+                <div className="product-info-content">
                 <p className="info-item">Tên sản phẩm: {productInfo.name}</p>
                 <p className="info-item">Giá: {productInfo.price}</p>
+                </div>
             </div>
+            <hr className="divider" />
             <div className="user-info">
                 <h2 className="info-title">Thông tin người dùng</h2>
                 <p className="info-item">Tên người dùng: {userInfo.username}</p>
               
                 <p className="info-item">Địa chỉ: {userInfo.address}</p>
+              
             </div>
+            <div className="success-text">
+    <p className="success">Đơn hàng thành công</p>
+</div>
         </div>
     );
 }

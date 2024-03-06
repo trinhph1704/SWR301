@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useParams, useNavigate } from 'react-router-dom';
 import './DetailsPage.css';
-import api from "../components/utils/requestAPI"; 
+import api from "../components/utils/requestAPI";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import useAuth from '../hooks/useAuth';
 
 export default function Detailpage() {
   const [product, setProduct] = useState(null);
   const [cartBtn, setCartBtn] = useState("Purchase");
-  const [userMap, setUserMap] = useState({}); 
+  const [userMap, setUserMap] = useState({});
+  const { auth } = useAuth(); // Lấy thông tin người dùng từ hook useAuth
+  const navigate = useNavigate(); // Sử dụng useNavigate để chuyển hướng
 
   // Sử dụng useParams để lấy artworkId từ URL
   const { artworkId } = useParams();
@@ -51,6 +53,42 @@ export default function Detailpage() {
     }
   };
 
+  const handlePurchase = async () => {
+    try {
+      setCartBtn("Loading...");
+
+      // Kiểm tra xem người dùng đã đăng nhập chưa
+      if (!auth || !auth.user) {
+        // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        // Ví dụ: Chuyển hướng đến /login
+        navigate('/login');
+        return;
+      }
+
+      // Tạo dữ liệu order
+      const orderData = {
+        userID: auth.user.userId,
+        artwokID: artworkId,
+        createDate: new Date().toISOString()
+      };
+
+      // Gửi yêu cầu để thêm order
+      await api.post("https://localhost:7227/api/Order/create-new-order", orderData);
+
+      // Cập nhật trạng thái nút Purchase sau khi thành công
+      setCartBtn("Purchased");
+
+      // Hiển thị thông báo thành công
+      alert('Order created successfully!');
+
+      // Chuyển hướng sang trang order-detail
+      navigate('/home');
+    } catch (error) {
+      console.error('Error creating new order:', error);
+      setCartBtn("Purchase"); // Đặt lại nút Purchase nếu có lỗi xảy ra
+    }
+  };
+
   if (!product) {
     return <div>Loading...</div>;
   }
@@ -75,7 +113,7 @@ export default function Detailpage() {
             </div>
             <div className="d-flex flex-column align-items-start">
               <h2 className="my-4" style={{ fontSize: '3em', marginTop: '0', marginRight: '5em' }}>${product.price}</h2>
-              <button onClick={() => setCartBtn("Loading...")} className="btn btn-outline-primary" style={{ fontSize: '1.8rem', background: 'black', color: 'white', width: '450px' }}>{cartBtn}</button>
+              <button onClick={handlePurchase} className="btn btn-outline-primary" style={{ fontSize: '1.8rem', background: 'black', color: 'white', width: '450px' }}>{cartBtn}</button>
             </div>
             <i className="fa-regular fa-heart" style={{marginTop:'1em'}}> Save</i><>&nbsp;&nbsp;&nbsp;&nbsp;</>
             <i className="fa-regular fa-eye"> View</i><>&nbsp;&nbsp;&nbsp;&nbsp;</>
