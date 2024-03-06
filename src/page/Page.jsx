@@ -10,6 +10,7 @@ const Page = () => {
   const [price, setPrice] = useState(0);
   const [genreID, setGenreID] = useState("");
   const [imageUrl, setImageUrl] = useState(""); // Sử dụng để lưu đường dẫn đến hình ảnh dưới dạng base64
+  const [imageUrl2, setImageUrl2] = useState("");
   const [reason, setReason] = useState("");
   const [genreList, setGenreList] = useState([]);
 
@@ -27,7 +28,13 @@ const Page = () => {
 
     fetchGenres();
   }, []);
-
+  const setNumericPrice = (value) => {
+    // Ensure that the entered value is a valid number
+    const numericValue = parseFloat(value);
+    if (!isNaN(numericValue)) {
+      setPrice(numericValue);
+    }
+  };
   const handleImageChange = (event) => {
     const file = event.target.files[0]; // Lấy file từ sự kiện onChange
 
@@ -41,33 +48,61 @@ const Page = () => {
     reader.onload = () => {
       const imageUrl = reader.result; // Nhận kết quả dạng base64
       setImageUrl(imageUrl); // Cập nhật state imageUrl với đường dẫn mới
+      
     };
   };
 
+  const handleImageChange2 = (event) => {
+    const file = event.target.files[0]; // Lấy file từ sự kiện onChange
+
+    // Tạo một đối tượng FileReader
+    const reader = new FileReader();
+
+    // Đọc file như một chuỗi dạng data URL
+    reader.readAsDataURL(file);
+
+    // Được gọi khi quá trình đọc file hoàn thành
+    reader.onload = () => {
+      
+      const imageUrl2 = reader.result;
+      setImageUrl2(imageUrl2);
+    };
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const artworkData = {
+      userID: auth.userId,
       title: title,
       description: description,
       price: price,
-      genreID: genreID,
-      imageUrl: imageUrl, // Sử dụng đường dẫn imageUrl để lưu hình ảnh dưới dạng base64
-      reason: reason
+      genres: [
+        {
+          genreID: genreID,
+        }
+      ],
+      imageUrl: imageUrl,
+      imageUrl2: imageUrl2,
+      reason: reason,
     };
 
     try {
+      const headers = {
+        "Content-Type": "application/json",
+      };
+      
+      // Check if auth.token exists before adding Authorization header
+      if (auth && auth.token) {
+        headers.Authorization = `Bearer ${auth.token}`;
+      }
+      
       const response = await api.post(
         "https://localhost:7227/api/Artwork/create-new-artwork",
         artworkData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`, // Use backticks here
-          },
-        }
+        { headers }
       );
-    
+      
+
       console.log("Artwork created successfully:", response.data);
       // Handle success here, e.g., redirect user to another page
       window.prompt("Artwork created successfully!");
@@ -76,14 +111,15 @@ const Page = () => {
       // Handle error here, e.g., show error message to the user
       window.prompt("Error creating artwork. Please try again.");
     }
-  }  
+  }
 
   return (
     <div className="add-artwork-form">
-      <h1 className="form-title">Create Artwork</h1>
+      <h1 className="cus-form-title">Create Artwork</h1>
+      
       <form onSubmit={handleSubmit}>
 
-      <label className="form-label">
+        <label className="cus-form-label">
           Genre:
           <select
             value={genreID}
@@ -95,92 +131,84 @@ const Page = () => {
             ))}
           </select>
         </label>
-              <br />
-        <label className="form-label">
+        <br />
+        <label className="cus-form-label">
           Title:
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="form-input"
+            className="cus-form-input"
           />
         </label>
-              <br />
-        <label className="form-label">
+        <br />
+        <label className="cus-form-label">
           Description:
           <input
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="form-textarea"
+            className="cus-form-textarea"
           />
         </label>
-              <br />
-        <label className="form-label">
+        <br />
+        <label className="cus-form-label">
           Price Paid:
           <input
-            type="text"
+            type="number"
             value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            className="form-input"
+            onChange={(e) => setNumericPrice(e.target.value)}
+            className="cus-form-input"
           />
         </label>
-              <br />
-              <div>
-        <div className="img-column-left">
-          <p>your artwork in upload Image</p>
-        
-          <img src="/public/i.png" alt="your artwork in upload Image" />
+        <br />
+        <div className="upload-information">
+          <div className="img-column-left">
+            <p>your artwork in upload Image</p>
 
-        </div>
-        <div className="img-column-right">
-          <p>your artwork with your sign in Upload Image With Your Sign</p>
-        
-        <img src="/public/i_sign.png" alt="your artwork in upload Image" />
+            <img src="/public/i.png" alt="your artwork in upload Image" />
 
-        </div>
+          </div>
+          <div className="img-column-right">
+            <p>your artwork with your sign in Upload Image With Your Sign</p>
+
+            <img src="/public/i_sign.png" alt="your artwork in upload Image" />
+
+          </div>
         </div>
         <br />
-        <div className="image-upload">
-          <label className="form-label">
+        <div className="cus-image-upload">
+          <label className="cus-form-label">
             Upload Image:
             <input
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              className="form-select"
+              className="cus-form-select"
             />
           </label>
-        </div>
+        
         {/* Hiển thị hình ảnh */}
         {imageUrl && (
           <img src={imageUrl} alt="Artwork" style={{ maxWidth: "100px", maxHeight: "100px" }} />
-        )}
+        )}</div>
         <br />
-        <div className="image-upload">
-          <label className="form-label">
+        <div className="cus-image-upload">
+          <label className="cus-form-label">
             Upload Image With Your Sign:
             <input
               type="file"
               accept="image/*"
-              onChange={handleImageChange}
-              className="form-select"
+              onChange={handleImageChange2}
+              className="cus-form-select"
             />
           </label>
         </div>
-        {imageUrl && (
-          <img src={imageUrl} alt="Artwork" style={{ maxWidth: "100px", maxHeight: "100px" }} />
+        {imageUrl2 && (
+          <img src={imageUrl2} alt="Artwork" style={{ maxWidth: "100px", maxHeight: "100px" }} />
         )}
         <br />
-        <label className="form-label">
-          Reason:
-          <input
-            type="text"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-          />
-        </label>
-          <br />
-        <button type="submit" className="submit-button">Add Artwork</button>
+        
+        <button type="submit" className="cus-submit-button">Add Artwork</button>
       </form>
     </div>
   );

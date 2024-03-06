@@ -10,7 +10,7 @@
   padding: 2em;
 }
 
-.form-title {
+.cus-form-title {
   text-align: center;
   margin-bottom: 20px;
   color: #333;
@@ -25,7 +25,7 @@
   float: right;
 }
 
-.form-label {
+.cus-form-label {
   
   
   position: relative;
@@ -33,10 +33,10 @@
   color: #333;
 }
 
-.form-input,
-.form-select,
-.form-textarea,
-.image-upload {
+.cus-form-input,
+.cus-form-select,
+.cus-form-textarea,
+.cus-image-upload {
   width: 100%;
   padding: 10px;
 
@@ -49,33 +49,23 @@
   color: #333;
 }
 
-.form-input:focus,
-.form-input:valid,
-.form-select:focus,
-.form-select:valid,
-.form-textarea:focus,
-.form-textarea:valid,
-.image-upload:focus,
+.cus-form-input:focus,
+.cus-form-input:valid,
+.cus-form-select:focus,
+.cus-form-select:valid,
+.cus-form-textarea:focus,
+.cus-form-textarea:valid,
+.cus-image-upload:focus,
 .image-upload-input:valid {
   border-color: #000000; 
 }
-.form-label select {
+.cus-form-label select {
   width: 100%;
   padding: 8px; /* Adjust the padding as needed for spacing */
   font-size: 16px; /* Adjust the font size as needed */
 }
 
-
-.unit-radio {
-  display: flex;
-  margin-bottom: 20px;
-}
-
-.unit-radio input {
-  margin-right: 5px;
-}
-
-.submit-button {
+.cus-submit-button {
   width: 600px;
   padding: 10px;
   font-size: 16px;
@@ -126,3 +116,8 @@
   background-color: #f4f4f4;
 }
 
+.upload-information{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
