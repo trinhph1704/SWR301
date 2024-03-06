@@ -85,3 +85,6 @@
   margin-right: 100px;
   width: max-content;
 }
+.boxR img{
+  max-width: 100%;
+}

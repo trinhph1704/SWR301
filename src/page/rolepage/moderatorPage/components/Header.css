@@ -23,8 +23,9 @@
 .bottom-section {
   display: flex;
   height: 50px;
-  background-color: #ffb6c1;
+  background-color: #000000;
   font-family: cursive;
+  color:#ffffff
 }
 
 /* Styling for each menu item */
@@ -46,7 +47,7 @@
 /* Hover effect for the menu items */
 .menu-item a:hover {
   background-color: white;
-  color: #ff69b4;
-  border: 1px solid #ff69b4;
+  color: #000000;
+  border: 1px solid #000000;
   border-radius: 4px;
 }

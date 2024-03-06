@@ -5,6 +5,7 @@ import "./Body.css";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import api from "../../../../components/utils/requestAPI";
+import LayoutMorder from "../../../../components/layout/LayoutMorder";
 
 
 
@@ -30,7 +31,7 @@ export default function Body() {
   }, []);
 
   return (
-    
+    <LayoutMorder>
     <div className="bodys">
       
           {/* <div className="image-container"> */}
@@ -55,6 +56,7 @@ export default function Body() {
           </div>  
       
           </div> 
+          </LayoutMorder>  
   );
 }
 
