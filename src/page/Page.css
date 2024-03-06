@@ -11,6 +11,7 @@
 }
 
 .cus-form-title {
+  font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
   color: #333;
@@ -27,7 +28,7 @@
 
 .cus-form-label {
   
-  
+  display:grid;
   position: relative;
   margin-bottom: 20px;
   color: #333;
