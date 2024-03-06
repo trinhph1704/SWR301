@@ -53,7 +53,7 @@ const NavPage = () => {
             <NavLink to="/save" className="sub-nav-link">Save</NavLink>
           </li>
           <li>
-            <NavLink to="/follow" className="sub-nav-link">Follow</NavLink>
+            <NavLink to="/transHis" className="sub-nav-link">Transaction History </NavLink>
           </li>
         </ul>
       </nav>

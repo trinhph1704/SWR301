@@ -51,6 +51,7 @@ import ConfirmPage from "./page/ConfirmPage";
 import WaitingOrderPage from "./page/WaitingOrderPage";
 import Page from "./page/Page";
 import Premium from "./page/Premium";
+import TransactionHistory from "./page/TransactionHistory"
 import Napage from "./page/Napage";
 import Cpage from "./page/Cpage";
 import Editpage from "./page/Editpage";
@@ -165,6 +166,7 @@ const App = () => {
           <Route path="/about-us" element={<AboutPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/save" element={<SavePage savedProducts={savedProducts} />} />
+          <Route path="/transHis" element={<TransactionHistory/>} />
           <Route path="/page-m" element={<Cpage />} />
           <Route path="/na" element={<Napage />} />
           {/* <Route path="/content" element={<Body />}/>

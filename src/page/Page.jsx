@@ -106,10 +106,12 @@ const Page = () => {
       console.log("Artwork created successfully:", response.data);
       // Handle success here, e.g., redirect user to another page
       window.prompt("Artwork created successfully!");
+      history.push("/page-m");
     } catch (error) {
       console.error("Error creating artwork:", error);
       // Handle error here, e.g., show error message to the user
       window.prompt("Error creating artwork. Please try again.");
+      window.location.reload();
     }
   }
 
