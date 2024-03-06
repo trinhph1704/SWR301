@@ -58,6 +58,8 @@ import Editpage from "./page/Editpage";
 import PaymentPage from "./page/PaymentPage";
 import Detailpage from "./page/Detailpage";
 import Paymentblogpage from "./page/Paymentblogpage";
+import Insight from "./page/Insight";
+import Transfer from "./page/rolepage/moderatorPage/components/Transfer";
 
 import React, { useState } from 'react';
 
@@ -119,6 +121,7 @@ const App = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/products/cages" element={<CagePage />} />
         <Route path="/products/food" element={<FoodPage />} />
+	<Route path="/insight" element={<Insight />} />
        
         
         
@@ -202,7 +205,7 @@ const App = () => {
       </Route>
 
       {/* manager routes */}
-      <Route element={<RequireAuth allowedRoles={["4"]} />}>
+      {/* <Route element={<RequireAuth allowedRoles={["4"]} />}>
         <Route path="/manager-page" element={<ManagerPage />} />
         <Route element={<RoleLayout />}>
           <Route
@@ -213,7 +216,7 @@ const App = () => {
           <Route path="/product/:action" element={<ProductPage />} />
           <Route path="/voucher/:action" element={<VoucherPage />} />
         </Route>
-      </Route>
+      </Route> */}
 
       {/* staff routes */}
       <Route element={<RequireAuth allowedRoles={["3"]} />}>
@@ -228,10 +231,17 @@ const App = () => {
         </Route>
       </Route>
       {/* moderator routes */}
+      <Route element={<RequireAuth allowedRoles={["4"]} />}>
+        {/* <Route path="/manager-page" element={<ManagerPage />} /> */}
       <Route path="/content" element={<Body />}/>
-        
+      {/* <Route element={<RoleLayout />}>   */}
         <Route path="/report" element={<Report />}/>
         <Route path="/productPageDetail/:productId" element={<ProductPageDetail />} />
+        <Route path="/transfer" element={<Transfer />}/>
+        <Route path="/paymenttoperson" element={<PaymentToPerson />}/>
+
+        </Route>
+        {/* </Route> */}
       
 
       <Route element={<Layoutguest />}> </Route>

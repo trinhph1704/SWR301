@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import { AiFillBell } from "react-icons/ai";
 import api from '../../../../components/utils/requestAPI';
 import LayoutMorder from "../../../../components/layout/LayoutMorder";
+import useAuth from '../../../../hooks/useAuth';
+
 
 
 // eslint-disable-next-line no-unused-vars, react/prop-types
@@ -15,12 +17,17 @@ export default function ProductPage (){
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [rejectReason, setRejectReason] = useState('');
+  const [approveImgurl, setApproveImgurl] = useState('');
   const [approved, setApproved] = useState(false);
-  const [notification, setNotification] = useState('');
+  const [notificationContent, setNotificationContent] = useState('');
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
   const navigate = useNavigate();
   const [showRejectReason, setShowRejectReason] = useState(false);
   const [showButtons, setShowButtons] = useState(true);
+  const [showUploadForm, setShowUploadForm] = useState(false);
+  const { auth } = useAuth();
+  const [user, setUser] = useState(null);
+  const CANVA_URL = 'https://www.canva.com/design/DAF4nuGQopE/gXZjUMsbqAWaoGKkg_S8Dw/edit';
   // const history = useHistory();
 
   useEffect(() => {
@@ -50,33 +57,45 @@ export default function ProductPage (){
 
   const handleApprove = async () => {
     try {
-      const url = `https://localhost:7227/api/Artwork/update-artwork-proccessing?artworkId=${productId}`;
-      const data = {
-          reason: rejectReason        
+      const updateProcessingUrl = `https://localhost:7227/api/Artwork/update-artwork-proccessing?artworkId=${productId}`;
+      const updateImageData = {
+        reason: rejectReason        
       };
-      const response = await api.post(url,data);
-      console.log(response.data);
-      console.log("Product Approve");
+      const processingResponse = await api.post(updateProcessingUrl, updateImageData);
+      console.log(processingResponse.data);
+      console.log("Product Approved");
+  
+      const updateImageUrl = `https://localhost:7227/api/Artwork/update-artwork-image?artworkId=${productId}`;
+      const imageData = {
+        imageUrl: approveImgurl        
+      };
+      const imageResponse = await api.post(updateImageUrl, imageData);
+      console.log(imageResponse.data);
+      console.log("Image Uploaded");
+  
       setApproved(true);
       navigate("/content");
+  
+      localStorage.setItem(`notification_${auth.user.userId}`, "Tranh của bạn đã được duyệt");
     } catch (error) {
       console.error("Error approving product:", error);
     }
   };
   const handleUnApprove = async () => {
     try {
+      // if (auth.user) {
       const url = `https://localhost:7227/api/Artwork/delete-artwork?id=${productId}`;
       const data = {
           reason: rejectReason        
       };
-      const response = await api.delete(url);
+      const response = await api.delete(url,data);
       console.log(response.data);
       console.log("Product are delete");
       navigate("/content");
-      const userid = product.userId; // Lấy userId của người dùng tương ứng với sản phẩm
-    localStorage.setItem(`notification_${userid}`, rejectReason);
+     
+      localStorage.setItem(`notification_${auth.user.userId}`, `Tranh của bạn không được duyệt với lý do: ${rejectReason}`);
     // Hiển thị thông báo
-    setIsNotificationVisible(true);
+      // }
     } catch (error) {
       console.error("Error approving product:", error);
     }
@@ -84,6 +103,25 @@ export default function ProductPage (){
   const toggleNotification = () => {
     // Đóng hoặc mở thông báo khi nhấn vào icon
     setIsNotificationVisible(!isNotificationVisible);
+  };
+  const handleImageUpload = async() => {
+    try {
+      const url = `https://localhost:7227/api/Artwork/update-artwork-image?artworkId=${productId}`;
+      const data = {
+        imageUrl: approveImgurl        
+      };
+      const response = await api.post(url,data);
+      console.log(response.data);
+      console.log("Image Approve");
+      setApproved(true);
+      navigate("/content");
+    } catch (error) {
+      console.error("Error approving product:", error);
+    }
+    
+  };
+  const handleEditImage = () => {
+    window.open(CANVA_URL, '_blank');
   };
   return ( 
     <LayoutMorder>
@@ -113,6 +151,19 @@ export default function ProductPage (){
             </div>
           </div>
           <div className="actions">
+          {showUploadForm && (
+            
+  <div className="upload-form">
+    <button onClick={handleEditImage}className="edit-image-button">Edit Image</button> 
+    {/* < className='upload-form'> */}
+    <input placeholder="Input link of image after edited " className='button-upload'
+    value={approveImgurl}
+            onChange={(f) => setApproveImgurl(f.target.value)}>  
+    </input>
+    <button onClick={() => {setShowUploadForm(false);setShowButtons(true);}} className='Back-to-approve'>Back</button>
+    <button onClick={handleApprove}className="show-approve-button">CONFIRM</button> 
+  </div>
+)}
           {showRejectReason && (
             <div className='showReason'>
             <textarea placeholder="Lý do " className="reject-reason"
@@ -131,7 +182,8 @@ export default function ProductPage (){
             setShowButtons(false); }               
             }className="reject-button">UNAPPROVE</button>
             <div className="posting-time">Thời gian đăng: {product.time}</div>
-            <button onClick={handleApprove}className="approve-button">APPROVE</button>
+            <button onClick={() =>{ setShowButtons(false);
+            setShowUploadForm(true); } }className="approve-button">APPROVE</button>
             </div>
             )}
           </div>

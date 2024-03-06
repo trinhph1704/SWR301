@@ -67,7 +67,8 @@ const LogInPage = () => {
                 if (user.roleId === '2') {
                     navigate('/admin-page');
                 } if (user.roleId === '4')
-                    navigate('/manager-page');
+                    
+			navigate('/content');
                 if (user.roleId === '3')
                     navigate('/staff-page')
                     window.alert('Đăng nhập thành công');
