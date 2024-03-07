@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import api from "../components/utils/requestAPI";
 import useAuth from "../hooks/useAuth";
 import "./Page.css"
+import { Link } from "react-router-dom";
 
 const Page = () => {
+  
   const { auth } = useAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -70,22 +72,18 @@ const Page = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     const artworkData = {
-      userID: auth.userId,
+      userID:auth.user.userId,
       title: title,
       description: description,
       price: price,
-      genres: [
-        {
-          genreID: genreID,
-        }
-      ],
+      genreID: genreID,
       imageUrl: imageUrl,
       imageUrl2: imageUrl2,
       reason: reason,
     };
-
+  
     try {
       const headers = {
         "Content-Type": "application/json",
@@ -97,26 +95,26 @@ const Page = () => {
       }
       
       const response = await api.post(
-        "https://localhost:7227/api/Artwork/create-new-artwork",
+        `https://localhost:7227/api/Artwork/create-new-artwork?userID=${auth.user.userId}`,
         artworkData,
         { headers }
       );
-      
-
+  
       console.log("Artwork created successfully:", response.data);
       // Handle success here, e.g., redirect user to another page
       window.prompt("Artwork created successfully!");
-      history.push("/page-m");
+      
     } catch (error) {
       console.error("Error creating artwork:", error);
       // Handle error here, e.g., show error message to the user
       window.prompt("Error creating artwork. Please try again.");
-      window.location.reload();
     }
   }
+ 
 
   return (
     <div className="add-artwork-form">
+      <Link to ="/"><button className="cus-submit-button">Back to home</button></Link>
       <h1 className="cus-form-title">Create Artwork</h1>
       
       <form onSubmit={handleSubmit}>

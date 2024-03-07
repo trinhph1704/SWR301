@@ -5,6 +5,7 @@ import api from '../components/utils/requestAPI';
 // import jwtDecode from 'jwt-decode';
 import useAuth from '../hooks/useAuth';
 import Na from "./Napage";
+import { Link } from "react-router-dom";
 
 
 export default function Cpage() {
@@ -35,37 +36,40 @@ export default function Cpage() {
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
-      
+
     };
 
     fetchUserData();
   }, [auth]);
 
   return (
-    
+
     <div >
-       <Na className="Navuser" /> 
-       <div className="upload-button-container">
-  <button className="upload-image">Upload image</button>
-</div>
-       <div className='my-collection'>
-      {artworkList.map((artwork) => (
-        <div key={artwork.$id} className="image-collection">
-          <div className="overlay">
-            <img src={artwork.imageUrl} alt="artwork-image"
-            className={artwork.statusProcessing ? '' : 'processing-false'}
-            />
-            {!artwork.statusProcessing && <div className="waiting-text">Chờ duyệt</div>}
-          
+      <Na className="Navuser" />
+
+      <div className="upload-button-container">
+        <Link to="/page-c">
+          <button className="upload-image">Upload image</button>
+        </Link>
+      </div>
+      <div className='my-collection'>
+        {artworkList.map((artwork) => (
+          <div key={artwork.$id} className="image-collection">
+            <div className="overlay">
+              <img src={artwork.imageUrl} alt="artwork-image"
+                className={artwork.statusProcessing ? '' : 'processing-false'}
+              />
+              {!artwork.statusProcessing && <div className="waiting-text">Chờ duyệt</div>}
+
+            </div>
+            <div className="details">
+              <div className="authors">{artwork.description}</div>
+              <div className="titles">{artwork.title}</div>
+            </div>
           </div>
-          <div className="details">
-                      <div className="authors">{artwork.description}</div>
-                      <div  className="titles">{artwork.title}</div>   
-                       </div>
-        </div>
-      ))}
+        ))}
       </div>
     </div>
-    
+
   );
 };
