@@ -118,7 +118,7 @@ const App = () => {
      
      <Route element={<Layoutguest />}> 
         <Route path="/" element={<Navigate to="/home" />} />
-        <Route path="/order" element={<Order />} />
+        <Route path="/order/:orderId" element={<Order />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/products/cages" element={<CagePage />} />
         <Route path="/products/food" element={<FoodPage />} />
