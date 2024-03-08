@@ -14,7 +14,7 @@ const TransactionHistory = () => {
     if (auth.user) {
       const fetchTransactions = async () => {
         try {
-          const response = await api.get(`https://localhost:7227/api/Order/get-all-by-user?id=${auth.user.userId}`);
+          const response = await api.get(`https://localhost:7227/api/Order/get-all`);
           setTransactions(response.data);
         } catch (error) {
           console.error('Error fetching transactions:', error);
@@ -31,10 +31,11 @@ const TransactionHistory = () => {
         <table>
           <thead>
             <tr>
+              <th>Payment ID</th>
               <th>Order ID</th>
               <th>Date</th>
-              <th>Product Details</th>
-              <th>Actions</th>
+              <th>Total</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
