@@ -72,7 +72,7 @@ const Page = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+    
     const artworkData = {
       userID:auth.user.userId,
       title: title,
@@ -94,22 +94,33 @@ const Page = () => {
         headers.Authorization = `Bearer ${auth.token}`;
       }
       
-      const response = await api.post(
+      // Create the artwork
+      const createArtworkResponse = await api.post(
         `https://localhost:7227/api/Artwork/create-new-artwork?userID=${auth.user.userId}`,
         artworkData,
         { headers }
       );
-  
-      console.log("Artwork created successfully:", response.data);
+
+      console.log("Artwork created successfully:", createArtworkResponse.data);
+
+      // Update the status of the user's post
+      const updateStatusResponse = await api.post(
+        `https://localhost:7227/api/User/update-status-post?id=${auth.user.userId}`,
+        { status: "0" }, // Replace with the actual data you want to update
+        { headers }
+      );
+
+      console.log("User post status updated successfully:", updateStatusResponse.data);
+
       // Handle success here, e.g., redirect user to another page
       window.prompt("Artwork created successfully!");
-      
+
     } catch (error) {
       console.error("Error creating artwork:", error);
       // Handle error here, e.g., show error message to the user
       window.prompt("Error creating artwork. Please try again.");
     }
-  }
+  };
  
 
   return (
