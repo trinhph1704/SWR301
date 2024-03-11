@@ -119,35 +119,13 @@ const HomePage = () => {
     }
   };
 
-  const handleReportSelect = async (event, artworkId) => {
+  const handleReportSelect = (event, productId) => {
     const { value } = event.target;
-
-    try {
-      if (!auth.user) {
-        // Handle case where user is not authenticated
-        navigate('/log-in');
-        return;
-      }
-
-      const requestData = {
-        userId: auth.user.userId,
-        artworkId: artworkId,
-        Description: value,
-        time: new Date().toISOString(),
-      };
-
-      // Make the API call to create a new report
-      await api.post(`https://localhost:7227/api/Report/create-new-report`, requestData);
-
-      // Update the reporting value in the local state or perform any other necessary actions
-      setArtworkList((prevArtworkList) =>
-        prevArtworkList.map((artwork) =>
-          artwork.artworkId === artworkId ? { ...artwork, reporting: value } : artwork
-        )
-      );
-    } catch (error) {
-      console.error('Error creating a new report:', error);
-    }
+    setProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.id === productId ? { ...product, reporting: value } : product
+      )
+    );
   };
 
   return (
@@ -155,33 +133,30 @@ const HomePage = () => {
       <h1>Collect art and design online</h1>
       <div className="product-list">
         {currentProducts.map((product) => (
+            product.statusProcessing &&
           <div key={product.artworkId} className="product-itemm">
-            <div className="product-card">
+              <div className="product-card">
               <Link to={`/detail/${product.artworkId}`} className="product-link" key={product.artworkId}>
                 <div className="product-images">
                   <img src={product.imageUrl} alt={product.title} className="product-imagee" />
                 </div>
-              </Link>
-              <div className="product-content">
-                <p>Tác giả: {userMap[product.userId]?.username}</p>
-                <h3 className="product-title">{product.title}</h3>
-                <p>Giá: {product.price}</p>
-                <div className="button-heart">
-                  <button
-                    onClick={(event) => handleLikeToggle(event, product.artworkId, product.userId)}
-                    className={`like-button ${isProductLiked(product.artworkId) ? 'liked' : ''}`}
-                  >
-                    {isProductLiked(product.artworkId) ? <FaHeart /> : <FaRegHeart />}
-                  </button>
-                  <>&nbsp;</>
-                  <select value={product.reporting} onChange={(e) => handleReportSelect(e, product.artworkId)}>
-                    <option value="">Report</option>
-                    <option value="Bản quyền">Bản quyền</option>
-                    <option value="Khác">Khác</option>
-                  </select>
+                </Link>
+                <div className="product-content">
+                  <p>Tác giả: {userMap[product.userId]?.username}</p>
+                  <h3 className="product-title">{product.title}</h3>
+                  <p>Giá: {product.price}</p>
+                  <div className="button-heart">
+                    <button onClick={(event) => handleLikeToggle(event, product.artworkId, product.userId)} className={`like-button ${isProductLiked(product.artworkId) ? 'liked' : ''}`}>
+                      {isProductLiked(product.artworkId) ? <FaHeart /> : <FaRegHeart />}
+                    </button><>&nbsp;</>
+                    <button value={product.reporting} onChange={(e) => handleReportSelect(e, product.id)}>
+                      <Link to={`/artreport/${product.artworkId}`}>
+                      Report
+                      </Link>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
           </div>
         ))}
       </div>

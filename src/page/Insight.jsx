@@ -92,7 +92,7 @@ export default function Insight() {
               <div key={ord.$id} className="insight-image-collection">
                 
                 <div className="insight-order-overlay">  
-   <img src={artworkList[ord.artworkId].imageUrl} alt="insight-Artwork" />
+   <img src={artworkList[ord.artworkId].imageUrl2} alt="insight-Artwork" />
                 </div>
                 <div className="insight-order-details">
                   <div className="insight-order-authors">{artworkList[ord.artworkId].description}</div>

@@ -60,6 +60,10 @@ import Detailpage from "./page/Detailpage";
 import Paymentblogpage from "./page/Paymentblogpage";
 import Insight from "./page/Insight";
 import Transfer from "./page/rolepage/moderatorPage/components/Transfer";
+import PaymentBank from "./page/PaymentBank";
+import Send from "./page/rolepage/moderatorPage/components/Send";
+import PaymentPremium from "./page/PaymentPremium";
+
 
 import React, { useState } from 'react';
 
@@ -117,7 +121,7 @@ const App = () => {
      
      <Route element={<Layoutguest />}> 
         <Route path="/" element={<Navigate to="/home" />} />
-        <Route path="/order" element={<Order />} />
+        {/* <Route path="/order" element={<Order />} /> */}
         <Route path="/home" element={<HomePage />} />
         <Route path="/products/cages" element={<CagePage />} />
         <Route path="/products/food" element={<FoodPage />} />
@@ -142,7 +146,13 @@ const App = () => {
         <Route path="/custom-products-end" element={<TotalPage />} />
         <Route path="/order-confirm" element={<ConfirmPage />} />
         <Route path="/order-waiting" element={<WaitingOrderPage />} />
-        <Route path="/order-info" element={<Paymentblogpage />} />
+        {/* <Route path="/order-info" element={<Paymentblogpage />} /> */}
+        <Route path="/order/:orderId" element={<Order />} />
+        <Route path="/order-info/:orderId" element={<Paymentblogpage />} />
+        <Route path="/orderprumium-info/:orderPremiumId" element={<PaymentPremium />} />
+        <Route path="/paymentbank/:userId/:artworkUserId/:orderId" element={<PaymentBank />} />
+        
+        
        
       
         
@@ -159,6 +169,7 @@ const App = () => {
         <Route path="/home" element={<HomePage />} />
           <Route path="/products/cages" element={<CagePage />} />
           <Route path="/products/food" element={<FoodPage />} />
+          <Route path="/pre" element={<Premium />} />
           <Route
             path="/products/accessories-toys"
             element={<AccessoriesToysPage />}
@@ -186,10 +197,11 @@ const App = () => {
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/update-info" element={<UpdateInformationPage />} />
       <Route path="/page-c" element={<Page />} />
-      <Route path="/pre" element={<Premium />} />
+      
       <Route path="/edit" element={<Editpage />} />
       <Route path="/pay" element={<PaymentPage />} />
       <Route path="/detail/:artworkId" element={<Detailpage />} />
+      
 
       
       
@@ -238,7 +250,8 @@ const App = () => {
         <Route path="/report" element={<Report />}/>
         <Route path="/productPageDetail/:productId" element={<ProductPageDetail />} />
         <Route path="/transfer" element={<Transfer />}/>
-        <Route path="/paymenttoperson" element={<PaymentToPerson />}/>
+        <Route path="/send" element={<Send />}/>
+        
 
         </Route>
         {/* </Route> */}

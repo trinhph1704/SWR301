@@ -128,7 +128,8 @@ export default function ProductPage (){
     <div className="productdetail-page">
       <div className="body1">
      
-          <img src={product.imageUrl} alt="Product" />        
+          <img src={product.imageUrl} alt="Product" />
+          <img src={product.imageUrl2} alt="Product" />
         <div className="info-container">
         {/* <div className='Box-notification'>
         <div className="notification-icon" >
