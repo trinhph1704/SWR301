@@ -31,9 +31,17 @@ const Paymentblogpage = () => {
                 // Lấy userId từ dữ liệu đơn hàng
                 const userId = orderData.userId;
 
-                // Gửi yêu cầu POST để lấy thông tin người dùng dựa trên userId
-                const userId_artwork_Respone = await api.post(`https://localhost:7227/api/User/get-by-id`, { userID: `US14c3e` });
+
+                // Gửi yêu cầu POST để lấy thông tin admin
+                const response = await api.get(`https://localhost:7227/api/User/get all user`);
+                const users = response.data.$values;
+                const userIdsWithRoleId = users.filter(user => user.roleId === `4`);
+               const userIdModer = userIdsWithRoleId.map(user => user.userId);
+               
+               console.log(userIdModer);
+                const userId_artwork_Respone = await api.post(`https://localhost:7227/api/User/get-by-id`, { userID: userIdModer[1] });
                 const userId_artwork_data = userId_artwork_Respone.data
+                
 
                 // Gửi yêu cầu POST để lấy thông tin người dùng dựa trên userId
                 const userResponse = await api.post(`https://localhost:7227/api/User/get-by-id`, { userID: userId });

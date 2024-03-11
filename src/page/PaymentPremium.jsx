@@ -46,12 +46,12 @@ const PaymentPremium = () => {
                 const userData = userResponse.data;
 
                  // Gửi yêu cầu POST để lấy thông tin admin
-                //  const response = await api.get(`https://localhost:7227/api/User/get all user`);
-                //  const users = response.data.$values;
-                //  const userIdsWithRoleId = users.filter(user => user.roleId === `4`);
-                // const userIdModer = userIdsWithRoleId.map(user => user.userId);
-                // console.log(userIdModer);
-                 const userId_artwork_Respone = await api.post(`https://localhost:7227/api/User/get-by-id`, { userID: `US869eb` });
+                 const response = await api.get(`https://localhost:7227/api/User/get all user`);
+                 const users = response.data.$values;
+                 const userIdsWithRoleId = users.filter(user => user.roleId === `4`);
+                const userIdModer = userIdsWithRoleId.map(user => user.userId);
+                console.log(userIdModer);
+                 const userId_artwork_Respone = await api.post(`https://localhost:7227/api/User/get-by-id`, { userID: userIdModer[1] });
                  const userId_artwork_data = userId_artwork_Respone.data
 
                 
