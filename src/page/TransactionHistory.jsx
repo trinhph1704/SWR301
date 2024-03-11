@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FaHeart } from 'react-icons/fa';
 import Na from "./Napage";
 import api from "../components/utils/requestAPI"; 
 import useAuth from "../hooks/useAuth";
@@ -11,18 +9,37 @@ const TransactionHistory = () => {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    if (auth.user) {
-      const fetchTransactions = async () => {
-        try {
-          const response = await api.get(`https://localhost:7227/api/Order/get-all`);
-          setTransactions(response.data);
-        } catch (error) {
-          console.error('Error fetching transactions:', error);
+    const fetchUserData = async () => {
+      try {
+        if (auth.user) {
+          const response = await api.post("https://localhost:7227/api/User/get-by-id", { userId: auth.user.userId });
+          const userOrdersResponse = await api.get("https://localhost:7227/api/Order/get-all");
+          const allOrders = userOrdersResponse.data.$values;
+
+          const transactionsData = [];
+
+          for (const order of allOrders) {
+            try {
+              const paymentResponse = await api.get(`https://localhost:7227/api/Payment/get-payment-by-order-id?id=${order.orderId}`);
+              const paymentData = paymentResponse.data;
+              console.log('Payment Data:', paymentData); // Add this line for debugging
+              transactionsData.push(paymentData);
+            } catch (paymentError) {
+              console.error(`Error fetching payment data for order ${order.orderId}:`, paymentError);
+              // Handle the error (e.g., log it, display a message to the user)
+            }
+          }
+
+          setTransactions(transactionsData);
         }
-      };
-      fetchTransactions();
-    }
-  }, [auth.user]);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        // Handle the error (e.g., log it, display a message to the user)
+      }
+    };
+
+    fetchUserData();
+  }, [auth]);
 
   return (
     <div>
@@ -40,22 +57,12 @@ const TransactionHistory = () => {
           </thead>
           <tbody>
             {transactions.map(transaction => (
-              <tr key={transaction.orderId}>
+              <tr key={transaction.paymentId}>
+                <td>{transaction.paymentId}</td>
                 <td>{transaction.orderId}</td>
-                <td>{transaction.date}</td>
-                <td>
-                  {transaction.products.map(product => (
-                    <div key={product.productId}>
-                      <Link to={`/product/${product.productId}`}>
-                        <p className="product-name">{product.title}</p>
-                      </Link>
-                      <p className="product-price">{product.price}</p>
-                    </div>
-                  ))}
-                </td>
-                <td>
-                  <FaHeart className="heart-icon" onClick={() => handleUnLove(productId, auth.user.userId)} />
-                </td>
+                <td>{new Date(transaction.createDate).toLocaleString()}</td>
+                <td>{transaction.amount}</td>
+                <td>{transaction.status ? 'Success' : 'Fail'}</td>
               </tr>
             ))}
           </tbody>
